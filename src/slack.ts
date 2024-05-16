@@ -45,7 +45,7 @@ async function handleSlashCommand(payload: SlackSlashCommandPayload) {
             );
 
             if (!response.ok) {
-                console.log(response);
+                console.error('Error opening bug report modal:', response);
             }
             break;
 
@@ -80,14 +80,14 @@ async function handleSlashCommand(payload: SlackSlashCommandPayload) {
             );
 
             if (!res.ok) {
-                console.log(response);
+                console.error('Error opening request review modal:', res);
             }
             break;
 
         case '/standup':
             const standupRes = await slackApi('views.open', buildStandupModal(payload.trigger_id));
             if (!standupRes.ok) {
-                console.log(standupRes);
+                console.error('Error opening standup modal:', standupRes);
             }
             break;
 
@@ -119,6 +119,7 @@ async function handleInteractivity(
 
         switch (callback_id) {
             case 'bug-report-modal':
+                console.log('Handling bug report submission');
                 data = payload.view.state.values as any;
 
                 const bugReport = {
@@ -142,6 +143,7 @@ async function handleInteractivity(
                 break;
 
             case 'request-review-modal':
+                console.log('Handling request review submission');
                 data = payload.view.state.values as any;
 
                 const requestedReview = {
@@ -163,6 +165,7 @@ async function handleInteractivity(
                 break;
 
             case 'standup-modal':
+                console.log('Handling standup submission');
                 data = payload.view.state.values as any;
 
                 const standup = {
@@ -187,9 +190,7 @@ async function handleInteractivity(
                 break;
 
             default:
-                console.log(
-                    `No handler defined for ${payload.view.callback_id}`,
-                );
+                console.warn(`No handler defined for ${payload.view.callback_id}`);
                 return {
                     statusCode: 400,
                     body: `No handler defined for ${payload.view.callback_id}`,
@@ -204,6 +205,7 @@ async function handleInteractivity(
 }
 
 export const handler: Handler = async (event) => {
+    console.log('Received event:', JSON.stringify(event, null, 2));
     const valid = verifySlackRequest(event);
 
     if (!valid) {
@@ -224,7 +226,7 @@ export const handler: Handler = async (event) => {
         const payload = JSON.parse(body.payload);
         return handleInteractivity(payload);
     }
-
+    console.warn('Unhandled event type:', event);
     return {
         statusCode: 200,
         body: 'TODO: handle Slack commands and interactivity',
