@@ -100,6 +100,10 @@ type ModalArgs = {
 	id: string;
 	title: string;
 	submit_text?: string;
+    submit?: {
+        type: string;
+        text: string;
+    };
 	blocks: SlackBlock[];
 };
 
@@ -156,6 +160,40 @@ type SlackModalPayload = {
 	};
 };
 
+type InteractiveMessagePayload = {
+    type: 'block_actions';
+    user: {
+        id: string;
+        username: string;
+        name: string;
+        team_id: string;
+    };
+    channel: {
+        id: string;
+        name: string;
+    };
+    message: {
+        ts: string;
+        thread_ts?: string;
+    };
+    actions: Action[];
+    trigger_id: string;
+    response_url: string;
+    team: {
+        id: string;
+        domain: string;
+    };
+};
+
+type Action = {
+    action_id: string;
+    block_id: string;
+    value?: string;
+    type: string;
+    action_ts: string;
+};
+
+
 type SlackApiEndpoint = 'chat.postMessage' | 'views.open';
 
 type SlackApiRequestBody = {};
@@ -182,6 +220,19 @@ type SelectBlockArgs = {
 	}[];
 } & BlockArgs;
 
+type ButtonElement = {
+    type: 'button';
+    text: {
+        type: 'plain_text';
+        text: string;
+        emoji?: boolean;
+    };
+    action_id: string;
+    value?: string;
+    style?: 'danger' | 'primary';
+}
+
+/*
 type NotionItem = {
 	properties: {
 		opinion: {
@@ -202,7 +253,7 @@ type NotionItem = {
 			};
 		};
 	};
-};
+}; */
 
 type NewItem = {
 	opinion: string;
@@ -210,3 +261,29 @@ type NewItem = {
 	status?: string;
 	submitter?: string;
 };
+
+type BugReport = {
+    description: string;
+    severity: string;
+    reproductionSteps: string;
+    reporter: string;
+    status: string;
+};
+
+type RequestedReview = {
+	title: string,
+    description: string;
+	link: string;
+	reporter: string;
+    status: string;
+};
+
+type StandupReport = {
+    yesterdayTasks: string;
+    todayTasks: string;
+    blockers: string;
+    additionalNotes: string; 
+    reporter: string; 
+    date: string; 
+};
+
