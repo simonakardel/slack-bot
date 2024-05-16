@@ -21,4 +21,5 @@ const postDailyStandupReminder: Handler = async () => {
 };
 
 
-export const handler = schedule('* * * * *', postDailyStandupReminder);
+export const handler = schedule('0 10 * * *', postDailyStandupReminder);
+
