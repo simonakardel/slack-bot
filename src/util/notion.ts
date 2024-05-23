@@ -108,7 +108,6 @@ export async function saveRequestedReview(requestedReview: RequestedReview) {
 
     if (res.object === 'error') {
         console.error('Error saving a review request to Notion:', res);
-        // Handle the error appropriately
     } else {
         console.log("Success")
     }
