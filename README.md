@@ -90,18 +90,6 @@ Ensure you have the correct environment variables set up to connect to your Slac
 
 - `@netlify/functions`: Used to handle serverless functions on Netlify.
 
-## Examples
 
-### Bug Report
-
-To report a bug, use the `/bugreport` command in Slack. A modal will open where you can enter the bug details, severity, and steps to reproduce.
-
-### Stand-Up Report
-
-To submit a stand-up report, use the `/standup` command in Slack. A modal will open where you can enter your progress, planned tasks, blockers, and additional notes.
-
-### Request Review
-
-To request a code review, use the `/requestreview` command in Slack. A modal will open where you can enter the review title, description, and a link to the code.
 
 
